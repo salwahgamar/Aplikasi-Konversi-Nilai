@@ -7,6 +7,7 @@ const Navbar = () => {
         <h1 className="text-xl font-bold">Aplikasi Konversi Nilai & IPK</h1>
         <div className="space-x-4">
           <a href="#home" className="hover:underline">Home</a>
+        </div>
       </div>
     </nav>
   );
