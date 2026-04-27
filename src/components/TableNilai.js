@@ -16,7 +16,7 @@ const TableNilai = ({ nilaiList, onEdit, onDelete }) => {
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto">
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-blue-200">
               <th className="px-4 py-2 text-left">Nama</th>
               <th className="px-4 py-2 text-left">Mata Kuliah</th>
               <th className="px-4 py-2 text-left">Nilai</th>
