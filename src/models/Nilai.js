@@ -1,7 +1,8 @@
 class Nilai {
-  constructor(nama, matkul, nilai) {
+  constructor(kode, nama, sks, nilai) {
+    this.kode = kode;
     this.nama = nama;
-    this.matkul = matkul;
+    this.sks = parseInt(sks);
     this.nilai = parseFloat(nilai);
   }
 

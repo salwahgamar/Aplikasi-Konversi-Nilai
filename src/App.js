@@ -1,18 +1,74 @@
 // Aplikasi Konversi Nilai IPK - React App
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import FormNilai from './components/FormNilai';
 import TableNilai from './components/TableNilai';
+import Login from './components/Login';
 import ApiData from './components/ApiData';
 import './index.css';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
   const [nilaiList, setNilaiList] = useState([]);
   const [editingNilai, setEditingNilai] = useState(null);
 
+  // Check if user is already logged in
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setIsLoggedIn(true);
+      setUsername(storedUser);
+      loadUserNilai(storedUser);
+    }
+  }, []);
+
+  // Load user's nilai data from localStorage
+  const loadUserNilai = (user) => {
+    const key = `nilai_${user}`;
+    const storedData = localStorage.getItem(key);
+    if (storedData) {
+      try {
+        setNilaiList(JSON.parse(storedData));
+      } catch (e) {
+        console.error('Error loading nilai data:', e);
+        setNilaiList([]);
+      }
+    } else {
+      setNilaiList([]);
+    }
+  };
+
+  // Save nilai data to localStorage
+  const saveUserNilai = (data) => {
+    const key = `nilai_${username}`;
+    localStorage.setItem(key, JSON.stringify(data));
+  };
+
+  const handleLogin = (user) => {
+    setIsLoggedIn(true);
+    setUsername(user);
+    loadUserNilai(user);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+    setUsername('');
+    setNilaiList([]);
+    setEditingNilai(null);
+  };
+
   const handleAddNilai = (nilai) => {
+    // Check for duplicate kode mata kuliah
+    if (nilaiList.some(n => n.kode === nilai.kode)) {
+      alert('Kode mata kuliah sudah ada! Gunakan kode yang berbeda.');
+      return;
+    }
     nilai.id = Date.now();
-    setNilaiList([...nilaiList, nilai]);
+    const updatedList = [...nilaiList, nilai];
+    setNilaiList(updatedList);
+    saveUserNilai(updatedList);
   };
 
   const handleEdit = (nilai, index) => {
@@ -20,23 +76,35 @@ function App() {
   };
 
   const handleUpdateNilai = (updatedNilai) => {
+    // Check for duplicate kode mata kuliah (excluding the current item)
+    if (nilaiList.some((n, idx) => n.kode === updatedNilai.kode && idx !== editingNilai.index)) {
+      alert('Kode mata kuliah sudah ada! Gunakan kode yang berbeda.');
+      return;
+    }
     const newList = [...nilaiList];
     newList[editingNilai.index] = updatedNilai;
     setNilaiList(newList);
+    saveUserNilai(newList);
     setEditingNilai(null);
   };
 
   const handleDelete = (index) => {
-    setNilaiList(nilaiList.filter((_, i) => i !== index));
+    const updatedList = nilaiList.filter((_, i) => i !== index);
+    setNilaiList(updatedList);
+    saveUserNilai(updatedList);
   };
 
   const handleCancelEdit = () => {
     setEditingNilai(null);
   };
 
+  if (!isLoggedIn) {
+    return <Login onLogin={handleLogin} />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar />
+      <Navbar username={username} onLogout={handleLogout} />
       <div className="container mx-auto p-4">
         <FormNilai
           onAddNilai={handleAddNilai}
