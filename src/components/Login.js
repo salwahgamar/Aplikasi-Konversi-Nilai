@@ -35,7 +35,7 @@ const Login = ({ onLogin }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-2 text-gray-800">Aplikasi Konversi Nilai & IPK</h1>
+        <h1 className="text-3xl font-bold text-center mb-2 text-gray-800">Aplikasi Konversi Nilai IPK</h1>
         <p className="text-center text-gray-600 mb-6">Silahkan Login</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -78,7 +78,7 @@ const Login = ({ onLogin }) => {
         </form>
 
         <p className="text-center text-gray-600 text-sm mt-6">
-          Demo: Gunakan username dan password apapun untuk login
+          masukan username dan password untuk login
         </p>
       </div>
     </div>

@@ -75,7 +75,7 @@ const FormNilai = ({ onAddNilai, editingNilai, onUpdateNilai, onCancelEdit }) =>
               name="kode"
               value={formData.kode}
               onChange={handleChange}
-              placeholder="Contoh: IF101"
+              
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
             {errors.kode && <p className="text-red-500 text-sm">{errors.kode}</p>}
@@ -88,7 +88,7 @@ const FormNilai = ({ onAddNilai, editingNilai, onUpdateNilai, onCancelEdit }) =>
               name="nama"
               value={formData.nama}
               onChange={handleChange}
-              placeholder="Contoh: Pemrograman Web"
+              
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
             {errors.nama && <p className="text-red-500 text-sm">{errors.nama}</p>}
@@ -101,7 +101,6 @@ const FormNilai = ({ onAddNilai, editingNilai, onUpdateNilai, onCancelEdit }) =>
               name="sks"
               value={formData.sks}
               onChange={handleChange}
-              placeholder="Contoh: 3"
               min="1"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
@@ -115,7 +114,6 @@ const FormNilai = ({ onAddNilai, editingNilai, onUpdateNilai, onCancelEdit }) =>
               name="nilai"
               value={formData.nilai}
               onChange={handleChange}
-              placeholder="Contoh: 85"
               min="0"
               max="100"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -129,7 +127,7 @@ const FormNilai = ({ onAddNilai, editingNilai, onUpdateNilai, onCancelEdit }) =>
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold transition-colors duration-200"
           >
-            {editingNilai ? 'Update' : 'Tambah'}
+            {editingNilai ? 'Simpan Perubahan' : 'Tambah'}
           </button>
           {editingNilai && (
             <button
