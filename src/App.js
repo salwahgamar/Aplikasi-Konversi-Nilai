@@ -4,7 +4,8 @@ import Navbar from './components/Navbar';
 import FormNilai from './components/FormNilai';
 import TableNilai from './components/TableNilai';
 import Login from './components/Login';
-import ApiData from './components/ApiData';
+import Quote from './components/Quote';
+import Nilai from './models/Nilai';
 import './index.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   const [username, setUsername] = useState('');
   const [nilaiList, setNilaiList] = useState([]);
   const [editingNilai, setEditingNilai] = useState(null);
+  const [quoteTrigger, setQuoteTrigger] = useState(0);
 
   // Check if user is already logged in
   useEffect(() => {
@@ -29,7 +31,12 @@ function App() {
     const storedData = localStorage.getItem(key);
     if (storedData) {
       try {
-        setNilaiList(JSON.parse(storedData));
+        const parsedData = JSON.parse(storedData);
+        // Convert plain objects back to Nilai instances
+        const nilaiInstances = parsedData.map(n => 
+          new Nilai(n.kode, n.nama, n.sks, n.nilai)
+        );
+        setNilaiList(nilaiInstances);
       } catch (e) {
         console.error('Error loading nilai data:', e);
         setNilaiList([]);
@@ -69,6 +76,8 @@ function App() {
     const updatedList = [...nilaiList, nilai];
     setNilaiList(updatedList);
     saveUserNilai(updatedList);
+    // Trigger quote fetch ketika data nilai berhasil ditambahkan
+    setQuoteTrigger(prev => prev + 1);
   };
 
   const handleEdit = (nilai, index) => {
@@ -84,6 +93,8 @@ function App() {
     const newList = [...nilaiList];
     newList[editingNilai.index] = updatedNilai;
     setNilaiList(newList);
+    // Trigger quote fetch ketika data nilai berhasil diupdate
+    setQuoteTrigger(prev => prev + 1);
     saveUserNilai(newList);
     setEditingNilai(null);
   };
@@ -117,7 +128,7 @@ function App() {
           onEdit={handleEdit}
           onDelete={handleDelete}
         />
-        <ApiData />
+        {nilaiList.length > 0 && <Quote triggerFetch={quoteTrigger} />}
       </div>
     </div>
   );

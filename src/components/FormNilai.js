@@ -68,7 +68,18 @@ const FormNilai = ({ onAddNilai, editingNilai, onUpdateNilai, onCancelEdit }) =>
       <h2 className="text-2xl font-bold mb-4">{editingNilai ? 'Edit Nilai' : 'Tambah Nilai'}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Nama</label>
+          <label className="block text-sm font-medium text-gray-700">Kode Mata Kuliah</label>
+          <input
+            type="text"
+            name="kode"
+            value={formData.kode}
+            onChange={handleChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          />
+          {errors.kode && <p className="text-red-500 text-sm">{errors.kode}</p>}
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Nama Mata Kuliah</label>
           <input
             type="text"
             name="nama"
@@ -79,15 +90,16 @@ const FormNilai = ({ onAddNilai, editingNilai, onUpdateNilai, onCancelEdit }) =>
           {errors.nama && <p className="text-red-500 text-sm">{errors.nama}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Mata Kuliah</label>
+          <label className="block text-sm font-medium text-gray-700">SKS</label>
           <input
-            type="text"
-            name="matkul"
-            value={formData.matkul}
+            type="number"
+            name="sks"
+            value={formData.sks}
             onChange={handleChange}
+            min="1"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
-          {errors.matkul && <p className="text-red-500 text-sm">{errors.matkul}</p>}
+          {errors.sks && <p className="text-red-500 text-sm">{errors.sks}</p>}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Nilai</label>
